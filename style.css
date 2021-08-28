@@ -1,0 +1,20 @@
+.canvas-container {
+  border: 3px solid black;
+  background-color: cadetblue;
+}
+
+.canvas-layer {
+  border: 3px solid black;
+}
+
+/* .grid--layout {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    grid-column-gap: 50px;
+}
+
+.grid-item {
+    background-color:aquamarine;
+    border: 1px solid black;
+    text-align: center;
+} */
