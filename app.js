@@ -1,30 +1,12 @@
+const grid = new Grid();
+
 const canvas = document.querySelector('.canvas-container');
 const ctx = canvas.getContext('2d');
 canvas.width = 400;
 canvas.height = 400;
 const tileSize = 100;
 var tiles = [];
-
-// ctx.beginPath();
-// ctx.fillStyle = 'cadetblue';
-// ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-function drawGrid() {
-
-    for (let x = 100; x < canvas.width; x += 100) {
-        ctx.moveTo(x, 0);
-        ctx.lineTo(x, canvas.height);
-        ctx.strokeStyle = 'black';
-        ctx.stroke();
-    }
-
-    for (let y = 100; y < canvas.height; y += 100) {
-        ctx.moveTo(0, y);
-        ctx.lineTo(canvas.width, y);
-        ctx.strokeStyle = 'black';
-        ctx.stroke();
-    }
-}
+var numbers = [];
 
 function compareTileCoordination(obj1, obj2) {
     if (obj1.x === obj2.x && obj1.y === obj2.y)
@@ -50,48 +32,48 @@ function addRandomTileToGrid(tileSize, tileAmount) {
             j = Math.floor(Math.random() * column.length);
         let tile = new Tile(row[i], column[j], tileSize);
         tiles.push(tile);
-        if (index != 0) {
-            for (let n = 0; n < tiles.length; n++) {
-                while (compareTileCoordination(tiles[index], tiles[n]) === true && index != n) {
-                    i = Math.floor(Math.random() * row.length),
-                        j = Math.floor(Math.random() * column.length);
-                    let tile = new Tile(row[i], column[j], tileSize);
-                    tiles.splice(index, 1, tile);
-                }
+        for (let n = 0; n < tiles.length; n++) {
+            while (compareTileCoordination(tiles[index], tiles[n]) === true && index != n) {
+                i = Math.floor(Math.random() * row.length),
+                    j = Math.floor(Math.random() * column.length);
+                let tile = new Tile(row[i], column[j], tileSize);
+                tiles.splice(index, 1, tile);
             }
         }
-        tiles[index].drawTile();
+        tiles[index].drawTile(true);
     }
 }
 
 
 function designGame() {
-    drawGrid();
+
+    grid.drawGrid();
     addRandomTileToGrid(tileSize, 2);
+
     addEventListener('keydown', (e) => {
 
         switch (e.key) {
             case 'ArrowLeft':
                 tiles.forEach((tile, index) => {
-                    tiles[index].moveTileLeft();
+                    tile.moveTileLeft(numbers[index]);
                 });
                 break;
             case 'ArrowRight':
                 tiles.forEach((tile, index) => {
-                    tiles[index].moveTileRight();
+                    tile.moveTileRight(numbers[index]);
                 });
                 break;
             case 'ArrowUp':
                 tiles.forEach((tile, index) => {
-                    tiles[index].moveTileUp();
+                    tile.moveTileUp(numbers[index]);
                 });
                 break;
             case 'ArrowDown':
                 tiles.forEach((tile, index) => {
-                    tiles[index].moveTileDown();
+                    tile.moveTileDown(numbers[index]);
                 });
                 break;
-            }
+        }
     });
 }
 
